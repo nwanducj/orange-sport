@@ -30,9 +30,7 @@ export default {
   layout: "auth",
   methods: {
     resendVerify() {
-      this.$store.dispatch("resendVerification").then((_) => {
-        console.log("sent");
-      });
+      this.$store.dispatch("resendVerification").then((_) => {});
     },
   },
   created() {

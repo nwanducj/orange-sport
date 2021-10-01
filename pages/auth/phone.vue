@@ -151,16 +151,6 @@ export default {
         .then((result) => {
           this.$router.push("/");
         });
-      // this.confirmResult
-      //   .confirm(this.code)
-      //   .then((result) => {
-      //     alert("Registeration Successfull!", result);
-      //     var user = result.user;
-      //     this.$router.push("/");
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
     },
     authenticate() {
       var auth = getAuth();
@@ -178,13 +168,10 @@ export default {
           recaptchaVerifier: this.recaptchaVerifier,
         })
         .then((confirmationResult) => {
-          console.log(confirmationResult);
           this.confirmResult = confirmationResult;
           this.codeSent = true;
         })
-        .catch((error) => {
-          console.log("Sms not sent", error.message);
-        });
+        .catch((error) => {});
       // this.codeSent = true;
     },
   },
@@ -196,7 +183,6 @@ export default {
         size: "invisible",
         callback: (response) => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
-          console.log(response);
         },
       },
       auth

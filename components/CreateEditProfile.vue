@@ -174,7 +174,6 @@ export default {
       try {
         this.$v.profile.$touch();
         if (this.$v.$invalid) {
-          console.log("failed");
         } else {
           let data = {
             email: this.profile.email,
@@ -205,7 +204,6 @@ export default {
   },
   created() {
     if (this.user) {
-      console.log(this.user);
       this.profile.email = this.user.email ? this.user.email : "";
       this.profile.phoneNumber = this.user.phoneNumber
         ? this.user.phoneNumber

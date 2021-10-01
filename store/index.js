@@ -48,8 +48,6 @@ export const actions = {
                 await signInWithEmailAndPassword(auth, authData.email, authData.password).then((userCredential) => {
                     // Signed in 
                     userRecent = userCredential.user;
-                    console.log(userCredential)
-                    console.log(userCredential.user)
                 })
             } else {
                 await createUserWithEmailAndPassword(auth,
@@ -57,19 +55,17 @@ export const actions = {
                     authData.password
                 ).then((userCredential) => {
                     // Signed in 
-                    console.log(userCredential)
-                    console.log(userCredential.user)
                     userRecent = userCredential.user;
+
+                    //sending veification
                     sendEmailVerification(auth.currentUser)
                     // ...
                 })
             }
 
             //get JWT from firebase
-            console.log(auth.currentUser)
             const token = await auth.currentUser.accessToken
             const { email, uid } = auth.currentUser
-            // //console.log(token)
 
             if (process.browser) {
                 // save JWT to the cookie
@@ -80,7 +76,6 @@ export const actions = {
             vuexContext.commit('SET_USER', { email, uid })
             vuexContext.commit('SET_AUTH_TYPE', 'email')
         } catch (err) {
-            //console.log(err)
             throw err
         }
     },
@@ -106,7 +101,6 @@ export const actions = {
                 return confirmResult
             })
             .catch((error) => {
-                console.log("Sms not sent", error.message)
                 return false
             })
         return confirmResult
@@ -118,16 +112,12 @@ export const actions = {
                 return result
             })
             .catch((error) => {
-                console.log(error);
             });
-        console.log(auth)
-        console.log(auth.currentUser)
-        // const token = await auth.currentUser.accessToken
 
         vuexContext.commit('SET_AUTH_TYPE', 'phone')
         const { phoneNumber, uid, accessToken } = auth.currentUser
         vuexContext.commit('accessToken', accessToken)
-        // //console.log(token)
+        // 
 
         if (process.browser) {
             // save JWT to the cookie
@@ -143,24 +133,20 @@ export const actions = {
         let allList = []
         const interestList = await getDocs(collection(firestore, "interests"));
         interestList.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
             allList.push(doc.data().name)
         });
-        console.log(allList)
         return allList
     },
     async updateUsername(vuexContext, username) {
         try {
             const user = { ...vuexContext.state.userDto }
 
-            // //console.log('saving user', userData)
 
             await updateDoc(doc(firestore, "profiles", `${user.uid}`), { username: username });
 
             user.username = username
             vuexContext.commit('SET_USER_DTO', user)
         } catch (err) {
-            //console.log('Error', err)
             throw err
         }
     },
@@ -168,7 +154,6 @@ export const actions = {
         try {
             const user = { ...vuexContext.state.userDto }
 
-            // //console.log('saving user', userData)
             await updateEmail(auth.currentUser, email).then(() => {
                 // Email updated!
 
@@ -182,7 +167,6 @@ export const actions = {
             user.email = email
             vuexContext.commit('SET_USER_DTO', user)
         } catch (err) {
-            //console.log('Error', err)
             throw err
         }
     },
@@ -190,9 +174,11 @@ export const actions = {
         await sendPasswordResetEmail(auth, email)
             .then(val => { })
             .catch(err => {
-                console.log(err)
             })
     },
+
+
+    //fetching data everytime the layout page is refreshed
     async fetchData(vuexContext) {
         let accessTokenCookie = process.browser ?
             await localStorage.getItem('orange_access_token') :
@@ -203,13 +189,10 @@ export const actions = {
         }
 
         const decoded = JWTDecode(accessTokenCookie)
-        //console.log("Decoding...");
-        //console.log("Decoded", decoded);
 
         if (!decoded) {
             return
         }
-        console.log(decoded)
         vuexContext.commit('SET_USER', {
             uid: decoded.user_id,
             email: decoded.email,
@@ -219,27 +202,17 @@ export const actions = {
         })
 
 
-        //console.log('fetching user')
         try {
             const userId = vuexContext.state.user.uid
-            console.log(userId)
-
-            // const doc = await firestore.doc(`profiles/${userId}`).get()
-
             const docRef = doc(firestore, "profiles", `${userId}`);
             const docSnap = await getDoc(docRef)
-            //console.log('fetching user done')
 
             if (docSnap.exists()) {
-                //console.log("user exists")
                 vuexContext.commit('SET_USER_DTO', docSnap.data())
-
                 return false
             }
-            //console.log("not exists")
             return true
         } catch (err) {
-            //console.log('Error', err)
             throw err
         }
     },
@@ -247,23 +220,17 @@ export const actions = {
         try {
             const user = vuexContext.state.user
             let userData = {}
-
             if (data.uid == null) {
                 userData = { ...user, ...data }
             } else {
                 userData = { ...data }
             }
-            // userData.email = user.email
-            // //console.log('saving user', userData)
-
             await setDoc(doc(firestore, "profiles", `${user.uid}`), userData, { merge: true });
 
             //save user locally
-
             vuexContext.commit('SET_USER', { email: data.email, uid: user.uid })
             vuexContext.commit('SET_USER_DTO', data)
         } catch (err) {
-            //console.log('Error', err)
             throw err
         }
     },
@@ -283,7 +250,6 @@ export const actions = {
                 // An error happened.
             });
         } catch (err) {
-            //console.log(err)
             throw err
         }
     },

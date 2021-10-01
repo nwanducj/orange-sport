@@ -156,9 +156,7 @@ export default {
         .then((_) => {
           this.$router.push("/");
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     },
     validate() {
       if (!this.$refs.form.validate()) {

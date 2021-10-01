@@ -47,20 +47,16 @@ export default {
       this.$router.push("/auth/email-verification");
       return;
     }
-    // console.log(this.user.sign_in_provider === "password");
   },
   created() {
     try {
       this.$store.dispatch("fetchData").then((exist) => {
-        console.log(exist);
-
         if (exist != null) {
           this.showCompleteProfile = exist;
         }
         this.loadingPage = false;
       });
     } catch (e) {
-      console.log(e);
       this.loadingPage = false;
     }
   },

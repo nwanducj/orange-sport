@@ -72,9 +72,7 @@ export default {
       this.$store
         .dispatch("forgotPassword", this.email)
         .then((_) => {})
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     },
   },
 };
