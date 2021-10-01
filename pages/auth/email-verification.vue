@@ -1,5 +1,5 @@
 <template>
-  <v-row class="fill-height" justify="center" align="center">
+  <v-row class="fill-height" justify="center" align="center" dense no-gutters>
     <v-col cols="8">
       <v-card-title>
         An email has been sent to you. You will need to verify your email to

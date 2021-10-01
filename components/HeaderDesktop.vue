@@ -43,13 +43,18 @@
             </div>
             <div class="nav__text">Buddies</div>
           </v-btn>
-          <v-btn text class="text-none" @click="$router.push('/settings')">
+          <v-btn
+            text
+            class="text-none"
+            @click="$router.push('/settings')"
+            v-if="userDto"
+          >
             <div>
               <v-icon class="mx-2" size="20">mdi-cog</v-icon>
             </div>
             <div class="nav__text">Settings & Privacy</div>
           </v-btn>
-          <v-btn text class="text-none">
+          <v-btn text class="text-none" @click="profileOrLogin">
             <div>
               <v-avatar circle size="40" color="primary">
                 <img
@@ -60,7 +65,7 @@
             </div>
             <div class="ml-2 nav__v-btn__profile__user">
               <div>
-                <strong class="nav__text" @click="$router.push('profile')"
+                <strong class="nav__text"
                   >Hi, {{ userDto ? userDto.username : "Sign In" }}
                 </strong>
               </div>
@@ -102,9 +107,9 @@ export default {
   methods: {
     profileOrLogin() {
       if (this.userDto) {
-        this.$router.push("/user");
+        this.$router.push("/profile");
       } else {
-        this.$router.push("/auth/signin");
+        this.$router.push("/auth/email");
       }
     },
   },

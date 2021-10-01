@@ -1,12 +1,6 @@
 <template>
-  <div class="nav d-block d-sm-none">
-    <v-bottom-navigation
-      app
-      grow
-      color="primary"
-      v-model="value"
-      v-if="$vuetify.breakpoint.width < 960"
-    >
+  <div class="d-block d-sm-none">
+    <v-bottom-navigation app grow color="primary" v-model="value">
       <v-btn @click="$router.push('/discover')" value="home">
         <span class="text-caption">Discover</span>
         <v-icon size="20">mdi-compass</v-icon>

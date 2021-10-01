@@ -19,6 +19,7 @@ export default {
 <style lang="scss" scoped>
 img {
   width: 30%;
+  height: 50%;
 }
 @media screen and (min-width: 600px) {
   img {

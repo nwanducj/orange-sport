@@ -115,7 +115,7 @@ export default {
       profile: {
         phoneNumber: "",
         email: "",
-        username: "nwandu_cj",
+        username: "",
         interest: [],
       },
       interestList: [],

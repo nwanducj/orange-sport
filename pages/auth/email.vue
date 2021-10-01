@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" dense no-gutters>
     <v-col cols="12" md="6">
       <div class="card">
         <div style="width: 90%" class="mx-auto">
@@ -117,6 +117,7 @@ export default {
     return {
       hide_password: true,
       isLogin: true,
+      valid: "",
       email: "",
       password: "",
       password2: "",
