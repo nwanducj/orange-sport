@@ -20,6 +20,11 @@
                 v-model="phoneNumber"
                 append-icon="mdi-phone"
                 color="primary"
+                :error-messages="phoneNumberErrors"
+                required
+                @input="$v.phoneNumber.$touch()"
+                @blur="$v.phoneNumber.$touch()"
+                hint="Please, include your country code. +234 for Nigeria"
               ></v-text-field>
               <div
                 id="recaptcha-container"
@@ -90,11 +95,37 @@
 
 <script>
 import { getAuth, RecaptchaVerifier } from "firebase/auth";
+import {
+  required,
+  maxLength,
+  minLength,
+  email,
+} from "vuelidate/lib/validators";
 
 export default {
   name: "index",
   layout: "auth",
   props: {},
+  validations: {
+    phoneNumber: {
+      required,
+      minLength: minLength(14),
+      maxLength: maxLength(14),
+    },
+  },
+  computed: {
+    phoneNumberErrors() {
+      const errors = [];
+      if (!this.$v.phoneNumber.$dirty) return errors;
+      !this.$v.phoneNumber.maxLength &&
+        errors.push("Please enter a correct phone number");
+      !this.$v.phoneNumber.minLength &&
+        errors.push("Please enter a correct phone number");
+      !this.$v.phoneNumber.required &&
+        errors.push("Please enter a phone number");
+      return errors;
+    },
+  },
   data() {
     return {
       phoneNumber: "",
@@ -118,7 +149,6 @@ export default {
           code: this.code,
         })
         .then((result) => {
-          alert("Registeration Successfull!", result);
           this.$router.push("/");
         });
       // this.confirmResult

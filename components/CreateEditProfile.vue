@@ -38,6 +38,10 @@
                     outlined
                     solo
                     flat
+                    :error-messages="phoneNumberErrors"
+                    required
+                    @input="$v.profile.phoneNumber.$touch()"
+                    @blur="$v.profile.phoneNumber.$touch()"
                     hint="Please, include your country code. +234 for Nigeria"
                     append-icon="mdi-phone"
                     color="primary"
@@ -106,6 +110,11 @@ export default {
   validations: {
     profile: {
       username: { required, minLength: minLength(3), maxLength: maxLength(20) },
+      phoneNumber: {
+        required,
+        minLength: minLength(14),
+        maxLength: maxLength(14),
+      },
       interest: { required },
     },
   },
@@ -136,6 +145,17 @@ export default {
         errors.push("Username must be at most 3 characters long");
       !this.$v.profile.username.required &&
         errors.push("Please enter a usersname");
+      return errors;
+    },
+    phoneNumberErrors() {
+      const errors = [];
+      if (!this.$v.profile.phoneNumber.$dirty) return errors;
+      !this.$v.profile.phoneNumber.maxLength &&
+        errors.push("Please enter a correct phone number");
+      !this.$v.profile.phoneNumber.minLength &&
+        errors.push("Please enter a correct phone number");
+      !this.$v.profile.phoneNumber.required &&
+        errors.push("Please enter a phone number");
       return errors;
     },
     interestsErrors() {
@@ -187,7 +207,9 @@ export default {
     if (this.user) {
       console.log(this.user);
       this.profile.email = this.user.email ? this.user.email : "";
-      //   this.phoneNumber = this.user.phoneNumber ? this.user.phoneNumber : "";
+      this.profile.phoneNumber = this.user.phoneNumber
+        ? this.user.phoneNumber
+        : "";
     }
   },
 };

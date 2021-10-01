@@ -214,7 +214,7 @@ export const actions = {
             uid: decoded.user_id,
             email: decoded.email,
             phoneNumber: decoded.phone_number,
-            email_verified: decoded.email_verified,
+            email_verified: decoded.email_verified || null,
             sign_in_provider: decoded.firebase.sign_in_provider
         })
 
