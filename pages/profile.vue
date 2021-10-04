@@ -1,6 +1,12 @@
 <template>
   <div v-if="userDto">
     <v-card flat class="pa-4">
+      <div class="ma-n4">
+        <img
+          class="cover__image"
+          src="https://images.pexels.com/photos/3293148/pexels-photo-3293148.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        />
+      </div>
       <v-row justify="center" dense no-gutters>
         <v-col cols="12" md="8">
           <v-row dense no-gutters>
@@ -167,4 +173,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.cover__image {
+  width: 100%;
+  height: 150px;
+  object-fit: fill;
+}
 </style>

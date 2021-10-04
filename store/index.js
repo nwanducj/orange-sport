@@ -1,4 +1,4 @@
-import { auth, firestore, storage } from '@/services/firebase'
+import { auth, firestore } from '@/services/firebase'
 import { signInWithPhoneNumber, signOut, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, updateEmail, updatePassword, createUserWithEmailAndPassword, } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, getDocs, collection } from "firebase/firestore";
 
@@ -36,8 +36,6 @@ export const mutations = {
         state.authType = authType
     }
 }
-
-
 
 
 export const actions = {
